@@ -10,7 +10,7 @@ If you are on Windows, it probably still runs fine. You can either use the link 
 
 # After Installing Stack
 
-1. After you have installed `stack`, clone this repository to your local machine.
+1. After you have installed `stack`, clone [this repository](https://github.com/JavaPLT/haskell-course) to your local machine.
 2. `cd` over to `haskell-code/` and run `stack build`. This will take a while.
 3. Run `stack test`.
 
