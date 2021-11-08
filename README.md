@@ -9,7 +9,19 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
 ## (Tentative) Lecture Schedule
 
 * Lecture 1 (Tuesday, November 9)
-  - Introduction, Build Tools, Function Definitions, Polymorphism, Lists
+  - Introduction, Build Tools, Function Definitions, Currying, Polymorphism, Lists
+* Lecture 2 (Thursday, November 11)
+  - Laziness, fold, Debugging Tips, Modules, Algebraic Datatypes
+* Lecture 3 (Tuesday, November 16)
+  - Kinds, Typeclasses (Paramteric vs Ad-Hoc Polymorphism), Functors
+* Lecture 4 (Thursday, November 18)
+  - Applicative, IO, Do Notation
+* Lecture 5 (Tuesday, November 23)
+  - Other Monads (Maybe, Lists, State)
+* Lecture 6 (Thursday, November 25)
+  - Extended Example: Tic-Tac-Toe (Core Game Logic) 
+* Lecture 7 (Thursday, November 30)
+  - Extended Example: Tic-Tac-Toe (Command Line Interface, Graphical Interface) 
 
 ## Other Haskell Resources
 
