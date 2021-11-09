@@ -9,9 +9,10 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
 ## (Tentative) Lecture Schedule
 
 * Lecture 1 (Tuesday, November 9)
-  - Introduction, Build Tools, Function Definitions, Currying, Polymorphism, Lists
+  - Introduction, Build Tools, Function Definitions, Currying, Polymorphism
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture1), [Lecture Video](https://riceuniversity.zoom.us/rec/play/KB6XspmpizC4z59B3_OxU9XNt-YAXT_uVDMZPvk9KazlGpKjgGsoEMUGevNh3JBbsbfIfucoInOkTWBc.FYxDd66cFE2arbTp)
 * Lecture 2 (Thursday, November 11)
-  - Laziness, fold, Debugging Tips, Modules, Algebraic Datatypes
+  - Function Composition, Lists, Laziness, fold, Debugging Tips, Modules, Algebraic Datatypes
 * Lecture 3 (Tuesday, November 16)
   - Kinds, Typeclasses (Paramteric vs Ad-Hoc Polymorphism), Functors
 * Lecture 4 (Thursday, November 18)
