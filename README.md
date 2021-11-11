@@ -12,9 +12,10 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - Introduction, Build Tools, Function Definitions, Currying, Polymorphism
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture1), [Lecture Video](https://riceuniversity.zoom.us/rec/play/KB6XspmpizC4z59B3_OxU9XNt-YAXT_uVDMZPvk9KazlGpKjgGsoEMUGevNh3JBbsbfIfucoInOkTWBc.FYxDd66cFE2arbTp)
 * Lecture 2 (Thursday, November 11)
-  - Function Composition, Lists, Laziness, fold, Debugging Tips, Modules, Algebraic Datatypes
+  - Function Composition, Lists, Laziness, fold
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture2), [Lecture Video](https://riceuniversity.zoom.us/rec/play/TFndOkb68G9SiIveSbDmeBHQ5ZSKxtg9s5wrv75MIW31h2TYBLPil54-HN6yyqrLsDLqrUpQY8ajhvO7.6rz1TJpbmK0ArH7f)
 * Lecture 3 (Tuesday, November 16)
-  - Kinds, Typeclasses (Paramteric vs Ad-Hoc Polymorphism), Functors
+  - folds (contd.), Debugging Tips, Modules, Algebraic Datatypes, Kinds, Typeclasses (Paramteric vs Ad-Hoc Polymorphism), Functors
 * Lecture 4 (Thursday, November 18)
   - Applicative, IO, Do Notation
 * Lecture 5 (Tuesday, November 23)
