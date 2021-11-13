@@ -44,3 +44,5 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - [Lambda Style Music Video](http://www.youtube.com/watch?v=Ci48kqp11F8)
   - [Evolution of a Haskell Programmer](http://www.willamette.edu/~fruehr/haskell/evolution.html)
   - [Other Humorous Things](https://wiki.haskell.org/Humor)
+* Other
+  - [Real-world Haskell: Good, Bad, & Ugly](https://www.youtube.com/watch?v=7NB8tMa8sUk) (Tech Talk)
