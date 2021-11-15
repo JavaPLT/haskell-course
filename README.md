@@ -23,7 +23,11 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
 * Lecture 6 (Thursday, November 25)
   - Extended Example: Tic-Tac-Toe (Core Game Logic) 
 * Lecture 7 (Thursday, November 30)
-  - Extended Example: Tic-Tac-Toe (Command Line Interface, Graphical Interface) 
+  - Extended Example: Tic-Tac-Toe (Command Line Interface, Graphical Interface)
+
+## Assignments
+
+* [Assignment 9](https://javaplt.github.io/assignment-9/) (Due: November 22, 2359 hrs)
 
 ## Other Haskell Resources
 
