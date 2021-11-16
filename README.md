@@ -15,14 +15,15 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - Function Composition, Lists, Laziness, fold
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture2), [Lecture Video](https://riceuniversity.zoom.us/rec/play/TFndOkb68G9SiIveSbDmeBHQ5ZSKxtg9s5wrv75MIW31h2TYBLPil54-HN6yyqrLsDLqrUpQY8ajhvO7.6rz1TJpbmK0ArH7f)
 * Lecture 3 (Tuesday, November 16)
-  - folds (contd.), Debugging Tips, Modules, Algebraic Datatypes, Kinds, Typeclasses (Paramteric vs Ad-Hoc Polymorphism), Functors
+  - folds (contd.), Debugging Tips, Modules, Algebraic Datatypes, Kinds, Typeclasses (Paramteric vs Ad-Hoc Polymorphism)
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture3), [Lecture Video](https://riceuniversity.zoom.us/rec/play/dDt9K8ryHTkEBJ7VxRM59Obu0PoSLIXM8X4t49pg1pev8eZ00QSxQhZVSVEDAZ-3miqWlSs790BDwE31.A4iI9dPC_vj6FH1o?continueMode=true&_x_zm_rtaid=d3gjJmfGST64e8V4Lf5CKA.1637082685115.0905d67b8f0155e8f0c5e4e712ae01e5&_x_zm_rhtaid=652)
 * Lecture 4 (Thursday, November 18)
-  - Applicative, IO, Do Notation
+  - Functors, Applicative, IO, Do Notation
 * Lecture 5 (Tuesday, November 23)
   - Other Monads (Maybe, Lists, State)
-* Lecture 6 (Thursday, November 25)
+* Lecture 6 (Thursday, November 30)
   - Extended Example: Tic-Tac-Toe (Core Game Logic) 
-* Lecture 7 (Thursday, November 30)
+* Lecture 7 (Thursday, December 2)
   - Extended Example: Tic-Tac-Toe (Command Line Interface, Graphical Interface) 
 
 ## Other Haskell Resources
