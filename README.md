@@ -19,6 +19,7 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture3), [Lecture Video](https://riceuniversity.zoom.us/rec/play/dDt9K8ryHTkEBJ7VxRM59Obu0PoSLIXM8X4t49pg1pev8eZ00QSxQhZVSVEDAZ-3miqWlSs790BDwE31.A4iI9dPC_vj6FH1o?continueMode=true&_x_zm_rtaid=d3gjJmfGST64e8V4Lf5CKA.1637082685115.0905d67b8f0155e8f0c5e4e712ae01e5&_x_zm_rhtaid=652)
 * Lecture 4 (Thursday, November 18)
   - Functors, Applicative, IO, Do Notation
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture4), [Lecture Video]()
 * Lecture 5 (Tuesday, November 23)
   - Other Monads (Maybe, Lists, State)
 * Lecture 6 (Thursday, November 30)
