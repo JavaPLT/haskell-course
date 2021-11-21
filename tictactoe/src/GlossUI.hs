@@ -48,7 +48,7 @@ drawBoard k b = Pictures $ grid : markPics where
 
   markPics = [drawAt (i, j) (getMark b (i, j)) | i <- [0..2], j <- [0..2]]
 
-  drawAt :: (Int, Int) -> (Maybe Player) -> Picture
+  drawAt :: (Int, Int) -> Maybe Player -> Picture
   drawAt (_, _) Nothing = Blank
   drawAt (i, j) (Just X) = drawX k (i, j)
   drawAt (i, j) (Just O) = drawO k (i, j)
@@ -81,16 +81,16 @@ getCoordinates k (x, y) =
 
 gameUpdate' :: Size -> Event -> GameState -> GameState
 gameUpdate' _ e gs
-  | playersTurn gs == False || needToEval gs = gs
+  | not (playersTurn gs) || needToEval gs = gs
 gameUpdate' k (EventKey (MouseButton LeftButton) Down _ (x', y')) gs =
-    let newBoard = do 
+    let newBoard = do
             (i, j) <- getCoordinates k (x', y')
             putMark (curBoard $ pos gs) (curPlayer $ pos gs) (i, j)
     in case newBoard of
         Nothing -> gs
-        Just b' -> gs { pos = Position { 
+        Just b' -> gs { pos = Position {
                               curBoard = b'
-                            , curPlayer = nextPlayer (curPlayer $ pos gs) 
+                            , curPlayer = nextPlayer (curPlayer $ pos gs)
                             }
                       , playersTurn = False
                       , needToEval = True
@@ -102,9 +102,9 @@ gameTime :: Float -> GameState -> GameState
 gameTime _ gs
   | playersTurn gs && not (needToEval gs) = gs
 -- check if player has won
-gameTime t gs
-  | (needToEval gs) =
-      case (boardWinner $ curBoard $ pos gs) of
+gameTime _ gs
+  | needToEval gs =
+      case boardWinner $ curBoard $ pos gs of
         Just X -> gs { pos = (pos gs) { curBoard = allX } }
         Just O -> gs { pos = (pos gs) { curBoard = allO } }
         Nothing -> gs { needToEval = False }
@@ -114,7 +114,7 @@ gameTime _ gs =
     in GameState {pos = pos', kb = kb', playersTurn = True, needToEval = True}
 
 initGameState :: GameState
-initGameState = 
+initGameState =
   GameState {
       pos = Position {
         curBoard = initBoard
@@ -129,11 +129,11 @@ main :: IO ()
 main =
   let window = InWindow "Tic Tac Toe" (300, 300) (10, 10)
       size   = 100.0
-  in play 
-        window 
-        white 
-        1 
+  in play
+        window
+        white
+        1
         initGameState
-        (\ gs -> drawBoard size $ curBoard $ pos gs) 
-        (gameUpdate' size) 
+        (\ gs -> drawBoard size $ curBoard $ pos gs)
+        (gameUpdate' size)
         gameTime

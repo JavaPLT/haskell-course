@@ -4,7 +4,7 @@ import Control.Monad.State
 import Control.Concurrent
 import qualified Data.Map as Map
 
-import Board 
+import Board
 import Position
 
 getCoordinates :: IO (Int, Int)
@@ -25,7 +25,7 @@ getPlayerMove pos@(Position board player) = do
 
 gameLoop :: Position -> KnowledgeBase -> IO ()
 gameLoop pos@(Position board player) kb = do
-    case (boardWinner board) of
+    case boardWinner board of
         Just X -> putStrLn "X Wins!"
         Just O -> putStrLn "O Wins!"
         Nothing -> do

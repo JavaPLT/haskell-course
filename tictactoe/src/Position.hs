@@ -2,12 +2,12 @@ module Position where
 
 import Control.Applicative
 import Control.Monad.State
-import Data.Maybe 
+import Data.Maybe
 import Data.Map (Map)
 import Data.List (minimumBy)
 import qualified Data.Map as Map
 
-import Board 
+import Board
 
 data Position = Position { curBoard :: Board, curPlayer :: Player }
     deriving (Eq, Ord, Show)
@@ -24,19 +24,19 @@ lineWinner :: Board -> Line -> Maybe Player
 lineWinner b l
     | all (== Just X) marks = Just X
     | all (== Just O) marks = Just O
-    | otherwise = Nothing 
-    where 
-       marks = map (getMark b) l 
+    | otherwise = Nothing
+    where
+       marks = map (getMark b) l
 
 boardWinner :: Board -> Maybe Player
-boardWinner b = foldr (<|>) Nothing $ map (lineWinner b) winningLines
+boardWinner b = foldr ((<|>) . lineWinner b) Nothing winningLines
 
 nextPlayer :: Player -> Player
 nextPlayer X = O
 nextPlayer O = X
 
 succPositions :: Position -> [Position]
-succPositions (Position b p) = newPosition . fromJust . markSquare <$> (emptySquares b)
+succPositions (Position b p) = newPosition . fromJust . markSquare <$> emptySquares b
     where
         newPosition b' = Position { curBoard = b', curPlayer = nextPlayer p }
         markSquare = putMark b p
@@ -55,7 +55,7 @@ instance Ord Score where
     (Score Lose i) <= (Score Lose j) = i <= j
     (Score Lose _) <= _  = True
     (Score Draw i) <= (Score Draw j) = i >= j
-    (Score Draw _) <= (Score Win _) = True 
+    (Score Draw _) <= (Score Win _) = True
     (Score Draw _) <= (Score Lose _) = False
 
 type KnowledgeBase = Map Position Score
@@ -63,9 +63,10 @@ type KnowledgeBase = Map Position Score
 scorePosition :: Position -> State KnowledgeBase Score
 scorePosition pos@(Position b p)
     | isDraw b = pure $ Score { label = Draw, height = 0 }
-    | (boardWinner b) == Just p = pure $ Score { label = Win, height = 0 }
-    | Just _ <- (boardWinner b) = pure $ Score { label = Lose, height = 0 }
-scorePosition pos@(Position b p) = 
+    | winner == Just p = pure $ Score { label = Win, height = 0 }
+    | Just _ <- winner = pure $ Score { label = Lose, height = 0 }
+    where winner = boardWinner b
+scorePosition pos@(Position b p) =
     do
         knowledge <- gets (Map.lookup pos)
         case knowledge of
@@ -79,7 +80,7 @@ scorePosition pos@(Position b p) =
                 return score
 
 bestResponse :: Position -> State KnowledgeBase Position
-bestResponse pos@(Position b p) = 
+bestResponse pos@(Position b p) =
     do
         let nextPositions = succPositions pos
         nextScores <- mapM scorePosition nextPositions
@@ -95,6 +96,6 @@ curScore (Score Draw i) = Score Draw (i + 1)
 
 isWinning :: Position -> Bool
 isWinning pos@(Position b p) =
-    case (boardWinner b) of
-        Just p' -> (p == p')
+    case boardWinner b of
+        Just p' -> p == p'
         Nothing -> any isWinning $ succPositions pos
