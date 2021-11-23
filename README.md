@@ -21,7 +21,8 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - Functors, Applicative, IO, Do Notation
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture4), [Lecture Video](https://riceuniversity.zoom.us/rec/play/LwfzB-ntw2DXZ9OkdIu4dmZKzCuRH_I5Jdq3R9qI_N0O0CrypozJ8WNeRbZoXqXWIt0WXauKvNwTWdp8.jCsmsJ6-3uc8Gtei)
 * Lecture 5 (Tuesday, November 23)
-  - Other Monads (Maybe, Lists, State)
+  - Other Monads (Maybe, List, State)
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture5), [Lecture Video](https://riceuniversity.zoom.us/rec/play/vO5NcC5jURmpiwfL5R8b2eZR6-8M5ootltiv-ncNBIfLUxDZyPP6H9cvSJlXGDYWDtp95lS4I-hLoRZu.GS-NTlixslDabI3l?continueMode=true&_x_zm_rtaid=1vTWQ9VkRSadvykIRngKxw.1637687105808.bc38f0cb22728656415141e244485bf2&_x_zm_rhtaid=537)
 * Lecture 6 (Thursday, November 30)
   - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Core Game Logic) 
 * Lecture 7 (Thursday, December 2)
