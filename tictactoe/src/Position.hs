@@ -62,22 +62,22 @@ type KnowledgeBase = Map Position Score
 
 scorePosition :: Position -> State KnowledgeBase Score
 scorePosition pos@(Position b p)
-    | isDraw b = pure $ Score { label = Draw, height = 0 }
     | winner == Just p = pure $ Score { label = Win, height = 0 }
     | Just _ <- winner = pure $ Score { label = Lose, height = 0 }
+    | null (emptySquares b) = pure $ Score { label = Draw, height = 0 }
     where winner = boardWinner b
 scorePosition pos@(Position b p) =
     do
         knowledge <- gets (Map.lookup pos)
         case knowledge of
-            Just s -> return s
+            Just s -> pure s
             Nothing -> do
                 let nextPositions = succPositions pos
                 nextScores <- mapM scorePosition nextPositions
                 let bestSuccScore = minimum nextScores
                 let score = curScore bestSuccScore
                 modify (Map.insert pos score)
-                return score
+                pure score
 
 bestResponse :: Position -> State KnowledgeBase Position
 bestResponse pos@(Position b p) =
@@ -85,7 +85,7 @@ bestResponse pos@(Position b p) =
         let nextPositions = succPositions pos
         nextScores <- mapM scorePosition nextPositions
         let bestSucc = snd $ minimumBy (\(s1, p1) (s2, p2) -> compare s1 s2) $ zip nextScores nextPositions
-        return bestSucc
+        pure bestSucc
 
 -- given the minimum score among the successors,
 -- compute the current score
@@ -98,4 +98,12 @@ isWinning :: Position -> Bool
 isWinning pos@(Position b p) =
     case boardWinner b of
         Just p' -> p == p'
-        Nothing -> any isWinning $ succPositions pos
+        Nothing -> (not . null $ emptySquares b)
+                && (any isLosing $ succPositions pos)
+
+isLosing :: Position -> Bool
+isLosing pos@(Position b p) =
+    case boardWinner b of
+        Just p' -> p /= p'
+        Nothing -> (not . null $ emptySquares b)
+                && (all isWinning $ succPositions pos)
