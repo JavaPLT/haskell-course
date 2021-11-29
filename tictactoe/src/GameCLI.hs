@@ -11,7 +11,7 @@ import Position
 data GameState = GameState {
         pos :: Position
     ,   kb :: KnowledgeBase
-    ,   loopState :: ControlState
+    ,   controlState :: ControlState
     }
 
 data ControlState = 
@@ -22,25 +22,25 @@ data ControlState =
     | GameOver Player
 
 gameLoop :: GameState -> IO ()
-gameLoop gs = case loopState gs of
+gameLoop gs = case controlState gs of
     GameOver p -> handleGameOver p
     PlayersTurn -> do
         pos' <- handlePlayersTurn (pos gs) 
         print $ (curBoard $ pos')
-        gameLoop $ gs { pos = pos', loopState = HasPlayerWon }
+        gameLoop $ gs { pos = pos', controlState = HasPlayerWon }
     HasPlayerWon -> do
         case boardWinner (curBoard $ pos gs) of
-            Just p -> gameLoop $ gs { loopState = GameOver p }
-            Nothing -> gameLoop $ gs { loopState = ComputersTurn }
+            Just p -> gameLoop $ gs { controlState = GameOver p }
+            Nothing -> gameLoop $ gs { controlState = ComputersTurn }
     ComputersTurn -> do
         let (pos', kb') = runState (bestResponse $ pos gs) (kb gs)
         putStrLn "Computer's Move:"
         print $ (curBoard $ pos')
-        gameLoop $ gs { pos = pos', kb = kb' , loopState = HasComputerWon }
+        gameLoop $ gs { pos = pos', kb = kb' , controlState = HasComputerWon }
     HasComputerWon -> do
         case boardWinner (curBoard $ pos gs) of
-            Just p -> gameLoop $ gs { loopState = GameOver p }
-            Nothing -> gameLoop $ gs { loopState = PlayersTurn }
+            Just p -> gameLoop $ gs { controlState = GameOver p }
+            Nothing -> gameLoop $ gs { controlState = PlayersTurn }
 
 
 handleGameOver :: Player -> IO ()

@@ -12,15 +12,93 @@ import Debug.Trace
 import Board
 import Position
 
--- copying some code from https://gist.github.com/gallais/0d61677fe97aa01a12d5
+--------------------------------------------------------------------------------
+--- Game State
+--------------------------------------------------------------------------------
 
 data GameState = GameState {
-      pos :: Position
-    , kb :: KnowledgeBase
-    , playersTurn :: Bool
-    , needToEval :: Bool
+        pos :: Position
+    ,   kb :: KnowledgeBase
+    ,   controlState :: ControlState
     }
-    deriving Show
+
+data ControlState = 
+      PlayersTurn 
+    | HasPlayerWon
+    | ComputersTurn
+    | HasComputerWon
+    | GameOver Player
+
+--------------------------------------------------------------------------------
+--- Rendering, Event Handling, Time Handling, Initialization and main
+--------------------------------------------------------------------------------
+
+drawGame :: Size -> GameState -> Picture
+drawGame k gs = case controlState gs of
+    GameOver p -> drawBoard k (case p of X -> allX; O -> allO)
+    _ -> drawBoard k (curBoard $ pos gs)
+
+gameEvent :: Size -> Event -> GameState -> GameState
+gameEvent k (EventKey (MouseButton LeftButton) Down _ (x', y')) gs =
+  case controlState gs of 
+    PlayersTurn ->
+      let newBoard = do
+              (i, j) <- getCoordinates k (x', y')
+              putMark (curBoard $ pos gs) (curPlayer $ pos gs) (i, j)
+      in case newBoard of
+        Nothing -> gs
+        Just b -> gs { pos = Position {
+                              curBoard = b
+                            , curPlayer = nextPlayer (curPlayer $ pos gs)
+                            }
+                    , controlState = HasPlayerWon
+                      }
+    _ -> gs
+gameEvent _ _ gs = gs
+
+gameTime :: GameState -> GameState
+gameTime gs = case controlState gs of
+  PlayersTurn -> gs
+  HasPlayerWon -> case boardWinner . curBoard $ pos gs of
+    Just p -> gs { controlState = GameOver p }
+    Nothing -> gs { controlState = ComputersTurn }
+  ComputersTurn -> 
+    let (pos', kb') = runState (bestResponse $ pos gs) (kb gs)
+    in gs { pos = pos'
+          , kb = kb'
+          , controlState = HasComputerWon
+          }
+  HasComputerWon -> case boardWinner . curBoard $ pos gs of
+    Just p -> gs { controlState = GameOver p }
+    Nothing -> gs { controlState = PlayersTurn }
+  GameOver _ -> gs
+
+initGameState :: GameState
+initGameState =
+  GameState {
+      pos = Position { curBoard = initBoard, curPlayer = X
+      }
+    , kb = Map.empty
+    , controlState = PlayersTurn
+    }
+
+main :: IO ()
+main =
+  let window = InWindow "Tic Tac Toe" (300, 300) (10, 10)
+      size   = 100.0
+  in play
+        window
+        white
+        1
+        initGameState
+        (drawGame size)
+        (gameEvent size)
+        (\t -> gameTime)
+
+--------------------------------------------------------------------------------
+--- Rendering Details
+--- copying some code from https://gist.github.com/gallais/0d61677fe97aa01a12d5
+--------------------------------------------------------------------------------
 
 type Size = Float
 
@@ -61,6 +139,10 @@ drawBoard k b = Pictures $ grid : markPics where
        , [(0.5 , -1.5), (0.5 , 1.5)]
        ]
 
+--------------------------------------------------------------------------------
+--- Converting from mouse coordinates to board coordinates
+--------------------------------------------------------------------------------
+
 checkCoordinateY :: Size -> Float -> Maybe Int
 checkCoordinateY k f' =
   let f = f' / k
@@ -78,62 +160,3 @@ checkCoordinateX k f' =
 getCoordinates :: Size -> (Float, Float) -> Maybe (Int, Int)
 getCoordinates k (x, y) =
   (,) <$> checkCoordinateY k y <*> checkCoordinateX k x
-
-gameUpdate' :: Size -> Event -> GameState -> GameState
-gameUpdate' _ e gs
-  | not (playersTurn gs) || needToEval gs = gs
-gameUpdate' k (EventKey (MouseButton LeftButton) Down _ (x', y')) gs =
-    let newBoard = do
-            (i, j) <- getCoordinates k (x', y')
-            putMark (curBoard $ pos gs) (curPlayer $ pos gs) (i, j)
-    in case newBoard of
-        Nothing -> gs
-        Just b' -> gs { pos = Position {
-                              curBoard = b'
-                            , curPlayer = nextPlayer (curPlayer $ pos gs)
-                            }
-                      , playersTurn = False
-                      , needToEval = True
-                      }
-gameUpdate' _ _ gs = gs
-
-gameTime :: Float -> GameState -> GameState
--- let the player move
-gameTime _ gs
-  | playersTurn gs && not (needToEval gs) = gs
--- check if player has won
-gameTime _ gs
-  | needToEval gs =
-      case boardWinner $ curBoard $ pos gs of
-        Just X -> gs { pos = (pos gs) { curBoard = allX } }
-        Just O -> gs { pos = (pos gs) { curBoard = allO } }
-        Nothing -> gs { needToEval = False }
--- make computers move
-gameTime _ gs =
-    let (pos', kb') = runState (bestResponse $ pos gs) (kb gs)
-    in GameState {pos = pos', kb = kb', playersTurn = True, needToEval = True}
-
-initGameState :: GameState
-initGameState =
-  GameState {
-      pos = Position {
-        curBoard = initBoard
-      , curPlayer = X
-      }
-    , kb = Map.empty
-    , playersTurn = True
-    , needToEval = False
-    }
-
-main :: IO ()
-main =
-  let window = InWindow "Tic Tac Toe" (300, 300) (10, 10)
-      size   = 100.0
-  in play
-        window
-        white
-        1
-        initGameState
-        (\ gs -> drawBoard size $ curBoard $ pos gs)
-        (gameUpdate' size)
-        gameTime

@@ -133,3 +133,82 @@ main = do
 ```
 
 ### Graphical Interface with Gloss
+
+We will use Gloss here to render the interface. Gloss is a library for rendering 2d graphics.
+
+Gloss has a `play` function that takes in four parameters (among other things):
+- An Initial value of some type `state`
+- A function of type `state -> Picture`
+- A function of type `Event -> state -> state` that handles events
+- A function of type `Float -> state -> state` that updates the state given a time delta.
+
+We will use `GameState` as our `state` type, as before. We will divide the transitions into two parts: Those that require event handling (`PlayersTurn`) and those that should automatically take place (`HasPlayerWon`, `ComputersTurn`, `HasComputerWon`).
+
+```haskell
+gameTime :: GameState -> GameState
+gameTime gs = case loopState gs of
+  PlayersTurn -> gs
+  HasPlayerWon -> undefined
+  ComputersTurn -> undefined
+  HasComputerWon -> undefined
+  GameOver _ -> gs
+
+gameEvent :: Size -> Event -> GameState -> GameState
+gameEvent k (EventKey (MouseButton LeftButton) Down _ (x', y')) gs =
+  case loopState gs of 
+    PlayersTurn -> undefined
+    _ -> gs
+gameEvent _ _ gs = gs
+```
+
+If we are at `PlayersTurn`, we need to wait for an event. If we are at some other state, no event handling needs to be done. We have divided the transitions accordingly. Also, if we are at `GameOver`, we will keep the state as is.
+
+The full functions are as follows.
+
+```haskell
+gameEvent :: Size -> Event -> GameState -> GameState
+gameEvent k (EventKey (MouseButton LeftButton) Down _ (x', y')) gs =
+  case loopState gs of 
+    PlayersTurn ->
+      let newBoard = do
+              (i, j) <- getCoordinates k (x', y')
+              putMark (curBoard $ pos gs) (curPlayer $ pos gs) (i, j)
+      in case newBoard of
+        Nothing -> gs
+        Just b -> gs { pos = Position {
+                              curBoard = b
+                            , curPlayer = nextPlayer (curPlayer $ pos gs)
+                            }
+                    , loopState = HasPlayerWon
+                      }
+    _ -> gs
+gameEvent _ _ gs = gs
+
+gameTime :: GameState -> GameState
+gameTime gs = case loopState gs of
+  PlayersTurn -> gs
+  HasPlayerWon -> case boardWinner . curBoard $ pos gs of
+    Just p -> gs { loopState = GameOver p }
+    Nothing -> gs { loopState = ComputersTurn }
+  ComputersTurn -> 
+    let (pos', kb') = runState (bestResponse $ pos gs) (kb gs)
+    in gs { pos = pos'
+          , kb = kb'
+          , loopState = HasComputerWon
+          }
+  HasComputerWon -> case boardWinner . curBoard $ pos gs of
+    Just p -> gs { loopState = GameOver p }
+    Nothing -> gs { loopState = PlayersTurn }
+  GameOver _ -> gs
+```
+
+We define the `drawGame` function in a manner that replaces all elements of the board with the winning symbol if someone has won.
+
+```haskell
+drawGame :: Size -> GameState -> Picture
+drawGame k gs = case loopState gs of
+    GameOver p -> drawBoard k (case p of X -> allX; O -> allO)
+    _ -> drawBoard k (curBoard $ pos gs)
+```
+
+There is some additional code necessary in order to render the board, as well as converting the mouse coordinates to board coordinates. See the `src/GlossUI` file for these details.
