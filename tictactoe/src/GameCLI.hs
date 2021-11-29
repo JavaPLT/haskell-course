@@ -7,42 +7,60 @@ import qualified Data.Map as Map
 import Board
 import Position
 
+
+data GameState = GameState {
+        pos :: Position
+    ,   kb :: KnowledgeBase
+    ,   loopState :: ControlState
+    }
+
+data ControlState = 
+      PlayersTurn 
+    | HasPlayerWon
+    | ComputersTurn
+    | HasComputerWon
+    | GameOver Player
+
+gameLoop :: GameState -> IO ()
+gameLoop gs = case loopState gs of
+    GameOver p -> handleGameOver p
+    PlayersTurn -> do
+        pos' <- handlePlayersTurn (pos gs) 
+        print $ (curBoard $ pos')
+        gameLoop $ gs { pos = pos', loopState = HasPlayerWon }
+    HasPlayerWon -> do
+        case boardWinner (curBoard $ pos gs) of
+            Just p -> gameLoop $ gs { loopState = GameOver p }
+            Nothing -> gameLoop $ gs { loopState = ComputersTurn }
+    ComputersTurn -> do
+        let (pos', kb') = runState (bestResponse $ pos gs) (kb gs)
+        putStrLn "Computer's Move:"
+        print $ (curBoard $ pos')
+        gameLoop $ gs { pos = pos', kb = kb' , loopState = HasComputerWon }
+    HasComputerWon -> do
+        case boardWinner (curBoard $ pos gs) of
+            Just p -> gameLoop $ gs { loopState = GameOver p }
+            Nothing -> gameLoop $ gs { loopState = PlayersTurn }
+
+
+handleGameOver :: Player -> IO ()
+handleGameOver p = putStrLn $ show p ++ " has won!"
+
 getCoordinates :: IO (Int, Int)
 getCoordinates = do
-  putStrLn "Enter coordinates (row, column):"
-  row <- getLine
-  column <- getLine
-  pure (read row, read column)
+  putStrLn "Your move (row, column):"
+  read <$> getLine
 
-getPlayerMove :: Position -> IO Position
-getPlayerMove pos@(Position board player) = do
+handlePlayersTurn :: Position -> IO Position
+handlePlayersTurn pos@(Position board player) = do
   move <- getCoordinates
   case putMark board player move of
       Nothing -> do
           putStrLn "Please Try Again"
-          getPlayerMove pos
+          handlePlayersTurn pos
       Just newBoard -> pure (Position newBoard (nextPlayer player))
-
-gameLoop :: Position -> KnowledgeBase -> IO ()
-gameLoop pos@(Position board player) kb = do
-    case boardWinner board of
-        Just X -> putStrLn "X Wins!"
-        Just O -> putStrLn "O Wins!"
-        Nothing -> do
-            nextPos <- getPlayerMove pos
-            threadDelay 1000000
-            let (nextPos', newKB) = runState (bestResponse nextPos) kb
-            putStrLn "Computer's move:"
-            print $ curBoard nextPos'
-            gameLoop nextPos' newKB
-
-
 
 main :: IO ()
 main = do
-    putStrLn "Welcome to the game of Tic Tac Toe!"
-    putStrLn "Enter your name: "
-    name <- getLine
-    putStrLn $ "Hello " ++ name ++ ", let's play!"
     print initBoard
-    gameLoop (Position initBoard X) Map.empty
+    gameLoop $ GameState (Position initBoard X) Map.empty PlayersTurn

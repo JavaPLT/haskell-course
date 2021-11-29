@@ -24,6 +24,7 @@ dependencies:
 - containers
 - mtl
 - gloss
+- hspec
 
 library:
   source-dirs: src

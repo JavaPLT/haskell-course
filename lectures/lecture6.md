@@ -35,7 +35,6 @@ data Player = X | O
     deriving (Show)
 ```
 
-(TODO: Add Eq, Ord. Explain why.)
 
 ### Board Type
 
@@ -67,7 +66,6 @@ Now, we will define the board type as follows:
 newtype Board = Board (Map (Int, Int) (Maybe Player))
 ```
 
-(TODO: Add Eq, Ord. Explain why.)
 
 Thus, a board is a map from a pair `(Int, Int)` to a `Maybe Player`. The `Nothing` represents an empty square.
 
