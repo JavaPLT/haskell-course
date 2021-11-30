@@ -24,7 +24,8 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - Other Monads (Maybe, List, State)
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture5), [Lecture Video](https://riceuniversity.zoom.us/rec/play/vO5NcC5jURmpiwfL5R8b2eZR6-8M5ootltiv-ncNBIfLUxDZyPP6H9cvSJlXGDYWDtp95lS4I-hLoRZu.GS-NTlixslDabI3l?continueMode=true&_x_zm_rtaid=1vTWQ9VkRSadvykIRngKxw.1637687105808.bc38f0cb22728656415141e244485bf2&_x_zm_rhtaid=537)
 * Lecture 6 (Thursday, November 30)
-  - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Core Game Logic) 
+  - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Core Game Logic)
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture6), [Lecture Video](https://riceuniversity.zoom.us/rec/play/MKZnk6siQX0VYa0c0-vsVbFphcnRsIh0a_6mNFIbNhIbdcFqnHpMySe6Seo7F36H-8rwbqwEtee189HK.xjAtfV4I_-MAfxhi)
 * Lecture 7 (Thursday, December 2)
   - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Command Line Interface, Graphical Interface) 
 
