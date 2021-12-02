@@ -6,7 +6,7 @@ We will use Stack in this class. See [Lecture 0](https://javaplt.github.io/haske
 
 You can also run Haskell programs on [repl.it](https://repl.it/), or install other build tools like Cabal.
 
-## Lecture Schedule
+## Class Schedule
 
 * Lecture 1 (Tuesday, November 9)
   - Introduction, Build Tools, Function Definitions, Currying, Polymorphism
@@ -29,6 +29,10 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
 * Lecture 7 (Thursday, December 2)
   - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Command Line Interface, Graphical Interface)
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture7), [Lecture Video](https://riceuniversity.zoom.us/rec/play/6M5crbsfNVkAzQ1C8Mub8WUKxvjI2UH5u9Y9PUDiPLZUlTUir5_p9IGmPC4L59bvvR7aHOk6hkbquO69.6ufdvKoXP77Zaw3V)
+* Assignment 1 (Assigned: November 15 , Due: November 22)
+  - [Template Repository](https://github.com/JavaPLT/assignment-9/)
+* Assignment 2 (Assigned: November 22 , Due: December 6)
+  - [Template Repository](https://github.com/JavaPLT/assignment-10/)
 
 ## Other Haskell Resources
 
