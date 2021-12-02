@@ -27,7 +27,8 @@ You can also run Haskell programs on [repl.it](https://repl.it/), or install oth
   - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Core Game Logic)
   - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture6), [Lecture Video](https://riceuniversity.zoom.us/rec/play/MKZnk6siQX0VYa0c0-vsVbFphcnRsIh0a_6mNFIbNhIbdcFqnHpMySe6Seo7F36H-8rwbqwEtee189HK.xjAtfV4I_-MAfxhi)
 * Lecture 7 (Thursday, December 2)
-  - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Command Line Interface, Graphical Interface) 
+  - Extended Example: [Tic-Tac-Toe](https://github.com/JavaPLT/haskell-course/tree/main/tictactoe) (Command Line Interface, Graphical Interface)
+  - [Lecture Notes](https://javaplt.github.io/haskell-course/lectures/lecture7), [Lecture Video](https://riceuniversity.zoom.us/rec/play/6M5crbsfNVkAzQ1C8Mub8WUKxvjI2UH5u9Y9PUDiPLZUlTUir5_p9IGmPC4L59bvvR7aHOk6hkbquO69.6ufdvKoXP77Zaw3V)
 
 ## Other Haskell Resources
 

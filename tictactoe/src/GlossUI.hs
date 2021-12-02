@@ -89,7 +89,7 @@ main =
   in play
         window
         white
-        1
+        4
         initGameState
         (drawGame size)
         (gameEvent size)
