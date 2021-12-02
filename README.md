@@ -6,7 +6,7 @@ We will use Stack in this class. See [Lecture 0](https://javaplt.github.io/haske
 
 You can also run Haskell programs on [repl.it](https://repl.it/), or install other build tools like Cabal.
 
-## (Tentative) Lecture Schedule
+## Lecture Schedule
 
 * Lecture 1 (Tuesday, November 9)
   - Introduction, Build Tools, Function Definitions, Currying, Polymorphism
