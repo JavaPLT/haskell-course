@@ -9,7 +9,7 @@
 ## Comments
 
 - No more prefix notation `4 * 5`.
-  - backtick notation ```3 `elem` [3,4,5]```
+  - backtick notation ```3 `elem` [3,4,5]``` to use a binary function as an infix operator
 - Function application is written as `f x`
 
 ## Definitions
